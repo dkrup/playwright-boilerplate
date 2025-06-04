@@ -1,16 +1,17 @@
-import {loginPageTestData} from './testData/LoginPageTestData';
-import {test, expect} from '@playwright/test';
-import {LoginPage} from '../pageObjects/LoginPage';
-import {LoginPageService} from '../services/LoginPageService';
+import { loginPageTestData } from './testData/LoginPageTestData';
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pageObjects/LoginPage';
+import { LoginPageService } from '../services/LoginPageService';
 
-const {chromium} = require('playwright');
+import { chromium } from 'playwright';
 
 const invalidUser = loginPageTestData.invalidUsername;
 const invalidPass = loginPageTestData.invalidPassword;
 const validUser = loginPageTestData.validUsername;
 const validPass = loginPageTestData.validPassword;
-let loginPage;
-let loginPageService;
+
+let loginPage: LoginPage;
+let loginPageService: LoginPageService;
 
 test.beforeAll(async () => {
     const browser = await chromium.launch();
@@ -39,4 +40,22 @@ test.describe('Try to log in with invalid and valid credentials', () => {
     });
 });
 
+test.describe(`Playwright's demo test`, () => {
+    test(`Basic Playwright's test`, async ({ page }) => {
+        await page.goto('https://demo.playwright.dev/todomvc/#/active');
+        await expect(page.locator('h1')).toHaveText(/todos/);
+    });
+});
 
+test.describe.skip('Example of Parametrized test', () => {
+    [
+        { name: 'Alice', expected: 'Hello, Alice!' },
+        { name: 'Bob', expected: 'Hello, Bob!' },
+        { name: 'Charlie', expected: 'Hello, Charlie!' },
+    ].forEach(({ name, expected }) => {
+        test(`Parametrized test testing with ${name}`, async ({ page }) => {
+            await page.goto(`https://example.com/greet?name=${name}`);
+            await expect(page.getByRole('heading')).toHaveText(expected);
+        });
+    });
+});
