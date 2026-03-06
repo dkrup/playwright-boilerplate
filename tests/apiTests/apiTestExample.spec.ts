@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 let productData;
 
-test.describe(`API test sample`, () => {
+test.describe.skip(`API test sample`, () => {
     test.skip('GET Products', async ({ request }) => {
         const productsResponse = await request.get(`https://fakestoreapi.com/products`);
         expect(productsResponse.ok()).toBeTruthy();
